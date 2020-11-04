@@ -18,6 +18,7 @@
         app:menu="@menu/bottom_nav_menu"
         app:backgroundTint="#D8D8D8" />
 
+    <!-- old one <fragment>... -->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
