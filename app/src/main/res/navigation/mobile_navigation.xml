@@ -3,23 +3,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_search">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="sk.stuba.fei.uim.sturating.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/navMe"
+        android:name="sk.stuba.fei.uim.sturating.ui.me.MeFragment"
+        android:label="@string/title_me"
+        tools:layout="@layout/fragment_me" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="sk.stuba.fei.uim.sturating.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navMyCourses"
+        android:name="sk.stuba.fei.uim.sturating.ui.mycourses.MyCoursesFragment"
+        android:label="@string/title_my_courses"
+        tools:layout="@layout/fragment_my_courses" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="sk.stuba.fei.uim.sturating.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_search"
+        android:name="sk.stuba.fei.uim.sturating.ui.search.SearchFragment"
+        android:label="@string/title_course_search"
+        tools:layout="@layout/fragment_search" />
+
+    <fragment
+        android:id="@+id/navTopList"
+        android:name="sk.stuba.fei.uim.sturating.ui.toplist.TopListFragment"
+        android:label="@string/title_top_list"
+        tools:layout="@layout/fragment_top_list" />
+
+    <fragment
+        android:id="@+id/navSettings"
+        android:name="sk.stuba.fei.uim.sturating.ui.settings.SettingsFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_settings" />
+
 </navigation>
