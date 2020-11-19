@@ -15,7 +15,7 @@
         android:id="@+id/navMyCourses"
         android:name="sk.stuba.fei.uim.sturating.ui.mycourses.MyCoursesFragment"
         android:label="@string/title_my_courses"
-        tools:layout="@layout/fragment_my_courses" />
+        tools:layout="@layout/fragment_my_courses_empty" />
 
     <fragment
         android:id="@+id/navigation_search"

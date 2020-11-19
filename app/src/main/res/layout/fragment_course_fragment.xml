@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/courseFragmentBackground">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tvCourseName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="B-MTSTA"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryDark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvLecturerLabel"
+            style="@style/CourseFragmentLecExDecLabel"
+            android:layout_marginTop="20dp"
+            android:text="@string/course_lecturer_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvCourseName" />
+
+        <TextView
+            android:id="@+id/tvLecturerName"
+            style="@style/CourseFragmentLecExDec"
+            android:text="doc. RNDr. Oľga Nánásiová, PhD."
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvLecturerLabel" />
+
+        <TextView
+            android:id="@+id/tvExaminerLabel"
+            style="@style/CourseFragmentLecExDecLabel"
+            android:layout_marginTop="20dp"
+            android:text="@string/course_examiner_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvLecturerName" />
+
+        <TextView
+            android:id="@+id/tvExaminer"
+            style="@style/CourseFragmentLecExDec"
+            android:text="Mgr. Dávid Pancza, PhD."
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvExaminerLabel" />
+
+        <TextView
+            android:id="@+id/tvCourseDescLabel"
+            style="@style/CourseFragmentLecExDecLabel"
+            android:layout_marginTop="20dp"
+            android:text="@string/course_description_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvExaminer" />
+
+        <TextView
+            android:id="@+id/tvCourseDesc"
+            style="@style/CourseFragmentLecExDecLabel"
+            android:layout_width="match_parent"
+            android:layout_marginEnd="10dp"
+            android:text="@string/course_description"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvCourseDescLabel" />
+
+        <TextView
+            android:id="@+id/tvAvgCourseScoreLabel"
+            style="@style/CourseFragmentAvgScores"
+            android:layout_marginTop="30dp"
+            android:text="@string/course_avg_score_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvCourseDesc" />
+
+        <TextView
+            android:id="@+id/tvAvgCourseScore"
+            style="@style/CourseFragmentAvgScores"
+            android:text="⭐⭐⭐"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAvgCourseScoreLabel" />
+
+        <TextView
+            android:id="@+id/tvAvgLecturerScoreLabel"
+            style="@style/CourseFragmentAvgScores"
+            android:layout_marginTop="30dp"
+            android:text="@string/lecturer_avg_score_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAvgCourseScore" />
+
+        <TextView
+            android:id="@+id/tvAvgLecturerScore"
+            style="@style/CourseFragmentAvgScores"
+            android:text="⭐⭐⭐⭐"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAvgLecturerScoreLabel" />
+
+        <TextView
+            android:id="@+id/tvAvgExaminerScoreLabel"
+            style="@style/CourseFragmentAvgScores"
+            android:layout_marginTop="30dp"
+            android:text="@string/examiner_avg_score_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAvgLecturerScore" />
+
+        <TextView
+            android:id="@+id/tvAvgExaminerScore"
+            style="@style/CourseFragmentAvgScores"
+            android:text="⭐⭐⭐⭐⭐"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAvgExaminerScoreLabel" />
+
+        <Button
+            android:id="@+id/btnAddRemoveCourse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/btn_add_remove_course"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAvgExaminerScore" />
+
+        <Button
+            android:id="@+id/btnAddRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/btn_rate_course"
+            android:textColor="@color/colorPrimaryDark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnAddRemoveCourse" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvCourseRatings"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toBottomOf="@id/btnAddRating"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
