@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/navBackground"
     android:padding="10dp"
@@ -28,7 +28,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvSmallCourseLecturer"
+        android:id="@+id/tvSmallCourseLecturerLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -38,7 +38,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvSmallCourseName" />
 
     <TextView
-        android:id="@+id/tvSmallCourseExaminer"
+        android:id="@+id/tvSmallCourseLecturer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -57,7 +57,7 @@
         android:text="Average score:"
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSmallCourseExaminer" />
+        app:layout_constraintTop_toBottomOf="@+id/tvSmallCourseLecturer" />
 
     <TextView
         android:id="@+id/tvSmallCourseAvgScr"
@@ -68,13 +68,13 @@
         android:text="⭐⭐⭐⭐⭐"
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSmallCourseExaminer" />
+        app:layout_constraintTop_toBottomOf="@+id/tvSmallCourseLecturer" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Click here to view course"
+        android:text="@string/course_small_click_to_view_full"
         android:textAlignment="center"
         android:textColor="@color/blue"
         android:textStyle="bold"
