@@ -43,7 +43,7 @@ class TopListFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
         //TODO: here we could ask Firebase about the list
         rvTopList = root.findViewById(R.id.rvTopList)
-        courseViewAdapter = CourseViewAdapter(requireContext())
+        courseViewAdapter = CourseViewAdapter()
         //TODO: error here
         //courseViewAdapter.itemClickLister = MyCoursesFragment()
 

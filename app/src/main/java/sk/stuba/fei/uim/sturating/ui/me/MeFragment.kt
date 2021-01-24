@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.getValue
@@ -16,15 +15,11 @@ import kotlin.math.floor
 
 class MeFragment : Fragment() {
 
-    private lateinit var meViewModel: MeViewModel
-
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        meViewModel =
-            ViewModelProvider(this).get(MeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_me, container, false)
         read("name", root.findViewById(R.id.tvName))
         read("email", root.findViewById(R.id.tvEmail))
@@ -45,7 +40,7 @@ class MeFragment : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Log.w("Failed to read$type", error.toException())
+                Log.w("Failed to read $type", error.toException())
             }
         }
 
@@ -70,7 +65,7 @@ class MeFragment : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Log.w("Failed to read$type", error.toException())
+                Log.w("Failed to read $type", error.toException())
             }
         }
 

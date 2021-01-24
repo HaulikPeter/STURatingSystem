@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.DialogFragment
 import sk.stuba.fei.uim.sturating.R
+import kotlin.math.floor
 
 class CourseFragment(
     /*TODO: given element db reference*/
@@ -44,15 +45,15 @@ class CourseFragment(
 
         val asc = root.findViewById<TextView>(R.id.tvAvgCourseScore)
         asc.text = ""
-        for (i in 1..course.avgCourseScore)
+        for (i in 1..(floor(course.avgCourseScore)).toInt())
             asc.append("⭐")
         val asl = root.findViewById<TextView>(R.id.tvAvgLecturerScore)
         asl.text = ""
-        for (i in 1..course.avgLecturerScore)
+        for (i in 1..(floor(course.avgLecturerScore)).toInt())
             asl.append("⭐")
         val ase = root.findViewById<TextView>(R.id.tvAvgExaminerScore)
         ase.text = ""
-        for (i in 1..course.avgExaminerScore)
+        for (i in 1..(floor(course.avgExaminerScore).toInt()))
             ase.append("⭐")
 
         // TODO: check db if course was added, by that enable/disable the buttons

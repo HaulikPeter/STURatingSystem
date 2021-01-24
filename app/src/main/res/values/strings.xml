@@ -20,6 +20,15 @@
     <string name="btn_add_remove_course">Add Course</string>
     <string name="btn_rate_course">Rate this course</string>
     <string name="course_small_click_to_view_full">Click to view course</string>
+    <string name="my_profile_label">My Profile</string>
+    <string name="name_label">Name:</string>
+    <string name="email_label">Email:</string>
+    <string name="no_rated_courses_label">No. rated courses:</string>
+    <string name="no_rated_lecturers_label">No. rated lecturers:</string>
+    <string name="no_rated_examiners_label">No. rated examiners:</string>
+    <string name="average_rating_for_courses_label">Average rating for courses:</string>
+    <string name="average_rating_for_lecturers_label">Average rating for lecturers:</string>
+    <string name="average_rating_for_examiners_label">Average rating for examiners:</string>
     <string-array name="spinner_array">
         <item>Courses</item>
         <item>Lecturers</item>
