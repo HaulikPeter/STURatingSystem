@@ -17,7 +17,8 @@
     <string name="course_avg_score_label">Average score for this <b><u>course</u></b></string>
     <string name="lecturer_avg_score_label">Average score for its <b><u>lecturer</u></b></string>
     <string name="examiner_avg_score_label">Average score for its <b><u>examiner</u></b></string>
-    <string name="btn_add_remove_course">Add Course</string>
+    <string name="btn_add_course_label">Add Course</string>
+    <string name="btn_remove_course_label">Remove Course</string>
     <string name="btn_rate_course">Rate this course</string>
     <string name="course_small_click_to_view_full">Click to view course</string>
     <string name="my_profile_label">My Profile</string>
@@ -29,6 +30,8 @@
     <string name="average_rating_for_courses_label">Average rating for courses:</string>
     <string name="average_rating_for_lecturers_label">Average rating for lecturers:</string>
     <string name="average_rating_for_examiners_label">Average rating for examiners:</string>
+    <string name="my_courses_empty_text_label">It seems you haven\'t added any courses yet.</string>
+    <string name="my_courses_empty_btn_label">Find Courses</string>
     <string-array name="spinner_array">
         <item>Courses</item>
         <item>Lecturers</item>

@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
@@ -16,7 +18,12 @@ class MyCoursesFragment : Fragment(), CourseViewAdapter.CourseItemClickListener 
 
     private lateinit var courseViewAdapter: CourseViewAdapter
     private lateinit var rvCourses: RecyclerView
-    private var coursesExist: Boolean? = null
+
+    private val auth = FirebaseAuth.getInstance()
+    private val db = FirebaseDatabase.getInstance().reference
+
+    private val courseNames = mutableMapOf<Int, String>()
+    //private val courseNames = mutableListOf<String>()
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -29,68 +36,9 @@ class MyCoursesFragment : Fragment(), CourseViewAdapter.CourseItemClickListener 
         courseViewAdapter.itemClickLister = this
         readCourses()
         rvCourses.adapter = courseViewAdapter
-
-
-        // TODO: READ FROM DB IF THERE IS ANY COURSE...
-//        if (coursesExist!!) {
-//            root = inflater.inflate(R.layout.fragment_my_courses_filled, container, false)
-//            rvCourses = root.findViewById(R.id.rvCourses)
-//            courseViewAdapter = CourseViewAdapter(requireContext())
-//            courseViewAdapter.itemClickLister = this@MyCoursesFragment
-//            rvCourses.adapter = courseViewAdapter
-//        } else {
-//            root = inflater.inflate(R.layout.fragment_my_courses_empty, container, false)
-//        }
-
-        //----------------------------
-
-        //TODO: if list is empty, inflate empty
-//        var root: View? = null
-//        val auth = FirebaseAuth.getInstance()
-//        val db = FirebaseDatabase.getInstance().reference
-//        val listener = object : ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                if (snapshot.exists()) {
-//                    val asd = "asd"
-//                    //todo be kellene csukni az elozoket a stackon
-//                    root = inflater.inflate(R.layout.fragment_my_courses_empty, container, false)
-//                    root!!.findViewById<Button>(R.id.btnFragment).setOnClickListener { }//click() }
-//                }
-//                else {
-//                    val dsa = "dsa"
-//                    //todo be kellene csukni az elozoket a stackon
-//                    root = inflater.inflate(R.layout.fragment_my_courses_filled, container, false)
-//                    rvCourses = root!!.findViewById(R.id.rvCourses)
-//                    courseViewAdapter = CourseViewAdapter(requireContext())
-//                    courseViewAdapter.itemClickLister = this@MyCoursesFragment
-//                    rvCourses.adapter = courseViewAdapter
-//                }
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                Log.w("Failed to read courses", error.toException())
-//            }
-//        }
-//        db.child("users").child(auth.uid.toString()).child("courses")
-//            .addValueEventListener(listener)
-
-//        val root = inflater.inflate(R.layout.fragment_my_courses_empty, container, false)
-//        root.findViewById<Button>(R.id.btnFragment).setOnClickListener { }//click() }
-
-        //TODO: else inflate filled fragment
-//        val root = inflater.inflate(R.layout.fragment_my_courses_filled, container, false)
-//        rvCourses = root.findViewById(R.id.rvCourses)
-//        courseViewAdapter = CourseViewAdapter(requireContext())
-//        courseViewAdapter.itemClickLister = this
-//
-//        rvCourses.adapter = courseViewAdapter
-
         return root
     }
 
-    private val auth = FirebaseAuth.getInstance()
-    private val db = FirebaseDatabase.getInstance().reference
-    private val courseNames = mutableListOf<String>()
     private fun readCourses() {
         readData(
             db.child("users").child(auth.uid.toString()).child("courses"),
@@ -98,8 +46,10 @@ class MyCoursesFragment : Fragment(), CourseViewAdapter.CourseItemClickListener 
                 override fun onSuccess(dataSnapshot: DataSnapshot) {
                     courseNames.clear()
                     for (child in dataSnapshot.children)
-                        courseNames.add(child.value.toString())
-                    loadCourses()
+                        //courseNames[child.key?.toInt() ?: -1] = child.key ?: ""
+                                                                                                                //courseNames[child.key?.toInt() ?: -1] = child.value.toString()
+                        courseNames[child.key?.toInt() ?: -1] = child.child("name").value.toString()
+                    loadCourses(dataSnapshot)
                 }
 
                 override fun onStart() {
@@ -112,24 +62,29 @@ class MyCoursesFragment : Fragment(), CourseViewAdapter.CourseItemClickListener 
             })
     }
 
-    private fun loadCourses() {
+    private fun loadCourses(userSnapshot: DataSnapshot) {
         for (courseName in courseNames) {
             readData(
-                db.child("courses").child(courseName),
+                db.child("courses").child(courseName.value),
                 object : OnGetDataListener {
                     override fun onSuccess(dataSnapshot: DataSnapshot) {
                         val course = Course(
-                            shortName = courseName,
+                            id = courseName.key,
+                            shortName = courseName.value,
                             longName = dataSnapshot.child("name").value.toString(),
                             shortDescription = dataSnapshot.child("description_short").value.toString(),
                             longDescription = dataSnapshot.child("description_long").value.toString(),
-                            avgCourseScore = dataSnapshot.child("avg_course_score").value.toString().toDouble()
+                            avgCourseScore = dataSnapshot.child("avg_course_score").value.toString().toDouble(),
                         )
 
-                        getTeacher("lecturer", dataSnapshot.child("lecturer_id").value.toString(), course)
-                        getTeacher("examiner", dataSnapshot.child("examiner_id").value.toString(), course)
+                        //TODO TODO
+                        getTeacher("lecturer", userSnapshot.child(courseName.key.toString()).child("lecturer_id").value.toString(), course)
+                        getTeacher("examiner", userSnapshot.child(courseName.key.toString()).child("examiner_id").value.toString(), course)
+                        //getTeacher("lecturer", dataSnapshot.child("lecturer_id").value.toString(), course)
+                        //getTeacher("examiner", dataSnapshot.child("examiner_id").value.toString(), course)
 
                         courseViewAdapter.addItem(course)
+                        checkIfAdapterEmpty()
                     }
 
                     override fun onStart() { Log.w("loadCourses()", "started") }
@@ -146,14 +101,18 @@ class MyCoursesFragment : Fragment(), CourseViewAdapter.CourseItemClickListener 
             object : OnGetDataListener {
                 override fun onSuccess(dataSnapshot: DataSnapshot) {
                     if (type == "examiner") {
+                        course.courseExaminerId = teacherId.toInt()
                         course.courseExaminer = dataSnapshot.child("name").value.toString()
                         course.avgExaminerScore = dataSnapshot.child("avg_examiner_score").value.toString().toDouble()
                         courseViewAdapter.replaceItem(course)
+                        checkIfAdapterEmpty()
                     }
                     else if (type == "lecturer") {
+                        course.courseLecturerId = teacherId.toInt()
                         course.courseLecturer = dataSnapshot.child("name").value.toString()
                         course.avgLecturerScore = dataSnapshot.child("avg_lecturer_score").value.toString().toDouble()
                         courseViewAdapter.replaceItem(course)
+                        checkIfAdapterEmpty()
                     }
                 }
 
@@ -177,10 +136,20 @@ class MyCoursesFragment : Fragment(), CourseViewAdapter.CourseItemClickListener 
         })
     }
 
+    fun checkIfAdapterEmpty() {
+        if (courseViewAdapter.isEmpty()) {
+            view?.findViewById<TextView>(R.id.tvMyCoursesEmpty)?.visibility = View.VISIBLE
+            view?.findViewById<Button>(R.id.btnMyCoursesEmpty)?.visibility = View.VISIBLE
+        } else {
+            view?.findViewById<TextView>(R.id.tvMyCoursesEmpty)?.visibility = View.INVISIBLE
+            view?.findViewById<Button>(R.id.btnMyCoursesEmpty)?.visibility = View.INVISIBLE
+        }
+    }
+
     override fun onItemClick(course: Course) {
         //TODO: open course as dialog fragment
         val fm = parentFragmentManager
-        val fragment = CourseFragment(course)
+        val fragment = CourseFragment(this, course, courseViewAdapter)
         fragment.show(fm, "Course Fragment")
     }
 }
