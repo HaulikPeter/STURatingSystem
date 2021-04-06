@@ -3,6 +3,7 @@ package sk.stuba.fei.uim.sturating.ui.course
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Html
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,19 +13,23 @@ import android.widget.Toast
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.DialogFragment
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import sk.stuba.fei.uim.sturating.R
-import sk.stuba.fei.uim.sturating.ui.mycourses.MyCoursesFragment
 import kotlin.math.floor
 
 class CourseFragment(
-    private val parent: MyCoursesFragment,
     private val course: Course,
     private val adapter: CourseViewAdapter
 ) : DialogFragment() {
 
     private var tvCourse: TextView? = null
     private var tvCourseDesc: TextView? = null
+
+    private var btnAddRemoveCourse: Button? = null
+    private var btnAddRating: Button? = null
 
     private val auth = FirebaseAuth.getInstance()
     private val db = FirebaseDatabase.getInstance().reference
@@ -34,7 +39,7 @@ class CourseFragment(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_course_fragment, container, false)
+        val root = inflater.inflate(R.layout.fragment_mycourses_course, container, false)
         dialog?.setTitle("Course Fragment")
 
         tvCourse = root.findViewById(R.id.tvCourse)
@@ -42,12 +47,10 @@ class CourseFragment(
         tvCourse?.tag = "long"
         tvCourse?.setOnClickListener { onNameClick() }
 
-        root.findViewById<TextView>(R.id.tvLecturer).text = course.courseLecturer
-        root.findViewById<TextView>(R.id.tvExaminer).text = course.courseExaminer
-
         tvCourseDesc = root.findViewById(R.id.tvCourseDesc)
         tvCourseDesc?.setText(Html.fromHtml(course.shortDescription +
-                "<br /><font color='blue'>More Info</font>"), TextView.BufferType.SPANNABLE)
+                "<br /><font color='blue'>More Info</font>", Html.FROM_HTML_MODE_LEGACY),
+            TextView.BufferType.SPANNABLE)
         tvCourseDesc?.tag = "short"
         tvCourseDesc?.setOnClickListener { onDescClick() }
 
@@ -64,11 +67,40 @@ class CourseFragment(
         for (i in 1..(floor(course.avgExaminerScore).toInt()))
             ase.append("⭐")
 
+        root.findViewById<TextView>(R.id.tvLecturer).text = course.courseLecturer
+        root.findViewById<TextView>(R.id.tvExaminer).text = course.courseExaminer
+
+        btnAddRemoveCourse = root.findViewById(R.id.btnAddRemoveCourse)
+        btnAddRating = root.findViewById(R.id.btnAddRating)
+        btnAddRemoveCourse?.tag = false
+        db.child("users").child(auth.uid.toString()).child("courses")
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    snapshot.children.forEach {
+                        if (it.child("name").value.toString() == course.shortName) {
+                            btnAddRemoveCourse?.tag = true
+                            checkButtons()
+                            return
+                        }
+                    }
+                    btnAddRemoveCourse?.tag = false
+                    checkButtons()
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.w(error.message, "my courses error reading courses from user")
+                }
+            })
+        //checkButtons(root)
+        btnAddRemoveCourse?.setOnClickListener {
+            btnAddRemoveCourse?.tag = !(btnAddRemoveCourse?.tag as Boolean)
+            checkButtons()
+        }
+
         // TODO: check from ADAPTER or check from db???
-        root.findViewById<Button>(R.id.btnAddRating).setOnClickListener {
+        btnAddRating?.setOnClickListener {
             Toast.makeText(context, "addRating", Toast.LENGTH_SHORT).show()
         }
-        checkButtons(root)
 
         return root
     }
@@ -84,49 +116,98 @@ class CourseFragment(
         adapter.notifyDataSetChanged()
         checkButtons()
     }
+
     private val removeListener = View.OnClickListener {
-        db.child("users").child(auth.uid.toString())
-            .child("courses").child(course.id.toString()).removeValue()
-        adapter.removeItem(course)
-        adapter.notifyDataSetChanged()
-        checkButtons()
-        dismiss()
-    }
+        db.child("users").child(auth.uid.toString()).child("courses")
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    snapshot.children.forEach {
+                        if (course.shortName == it.child("name").value.toString()) {
+                            db.child("users").child(auth.uid.toString())
+                                .child("courses")
+                                .child(it.key.toString()).removeValue()
+                            adapter.removeItem(course)
+                            adapter.notifyDataSetChanged()
+                            checkButtons()
+                            return
+                        }
+                    }
+                }
 
-    private fun checkButtons(root: View) {
-        val btnAddRemoveCourse = root.findViewById<Button>(R.id.btnAddRemoveCourse)
-        val btnAddRating = root.findViewById<Button>(R.id.btnAddRating)
-
-        if (adapter.hasItem(course.shortName)) {
-            btnAddRemoveCourse?.text = getString(R.string.btn_remove_course_label)
-            btnAddRemoveCourse.setOnClickListener(removeListener)
-            btnAddRating?.setTextColor(Color.BLACK)
-            btnAddRating?.isEnabled = true
-        } else {
-            btnAddRemoveCourse?.text = getString(R.string.btn_add_course_label)
-            btnAddRemoveCourse.setOnClickListener(addListener)
-            btnAddRating?.setTextColor(Color.GRAY)
-            btnAddRating?.isEnabled = false
-        }
+                override fun onCancelled(error: DatabaseError) {
+                    Log.w(error.message, "removeListener on myCourses remove btn")
+                }
+            })
     }
+//    private val removeListener = View.OnClickListener {
+//        db.child("users").child(auth.uid.toString())
+//            .child("courses").child(course.id.toString()).removeValue()
+//        adapter.removeItem(course)
+//        adapter.notifyDataSetChanged()
+//        checkButtons()
+//
+//        // TODO: kijavitani vagy atirni az egeszet
+//        dismiss()
+//    }
 
     private fun checkButtons() {
-        val btnAddRemoveCourse = requireView().findViewById<Button>(R.id.btnAddRemoveCourse)
-        val btnAddRating = requireView().findViewById<Button>(R.id.btnAddRating)
-
-        if (adapter.hasItem(course.shortName)) {
-            btnAddRemoveCourse.text = getString(R.string.btn_remove_course_label)
-            btnAddRemoveCourse.setOnClickListener(removeListener)
-            btnAddRating.setTextColor(Color.BLACK)
-            btnAddRating.isEnabled = true
-        } else {
-            btnAddRemoveCourse.text = getString(R.string.btn_add_course_label)
-            btnAddRemoveCourse.setOnClickListener(addListener)
-            btnAddRating.setTextColor(Color.GRAY)
-            btnAddRating.isEnabled = false
-        }
-        parent.checkIfAdapterEmpty()
+            if (btnAddRemoveCourse?.tag as Boolean) {
+                btnAddRemoveCourse?.apply {
+                    text = getString(R.string.btn_remove_course_label)
+                    setOnClickListener(removeListener)
+                    tag = false
+                }
+                btnAddRating?.apply {
+                    isEnabled = true
+                    setTextColor(Color.BLACK)
+                }
+            } else {
+                btnAddRemoveCourse?.apply {
+                    text = getString(R.string.btn_add_course_label)
+                    setOnClickListener(addListener)
+                    tag = true
+                }
+                btnAddRating?.apply {
+                    setTextColor(Color.GRAY)
+                    isEnabled = false
+                }
+            }
     }
+
+//    private fun checkButtons(root: View) {
+//        val btnAddRemoveCourse = root.findViewById<Button>(R.id.btnAddRemoveCourse)
+//        val btnAddRating = root.findViewById<Button>(R.id.btnAddRating)
+//
+//        if (adapter.hasItem(course.shortName)) {
+//            btnAddRemoveCourse?.text = getString(R.string.btn_remove_course_label)
+//            btnAddRemoveCourse.setOnClickListener(removeListener)
+//            btnAddRating?.setTextColor(Color.BLACK)
+//            btnAddRating?.isEnabled = true
+//        } else {
+//            btnAddRemoveCourse?.text = getString(R.string.btn_add_course_label)
+//            btnAddRemoveCourse.setOnClickListener(addListener)
+//            btnAddRating?.setTextColor(Color.GRAY)
+//            btnAddRating?.isEnabled = false
+//        }
+//    }
+
+//    private fun checkButtons() {
+//        val btnAddRemoveCourse = requireView().findViewById<Button>(R.id.btnAddRemoveCourse)
+//        val btnAddRating = requireView().findViewById<Button>(R.id.btnAddRating)
+//
+//        if (adapter.hasItem(course.shortName)) {
+//            btnAddRemoveCourse.text = getString(R.string.btn_remove_course_label)
+//            btnAddRemoveCourse.setOnClickListener(removeListener)
+//            btnAddRating.setTextColor(Color.BLACK)
+//            btnAddRating.isEnabled = true
+//        } else {
+//            btnAddRemoveCourse.text = getString(R.string.btn_add_course_label)
+//            btnAddRemoveCourse.setOnClickListener(addListener)
+//            btnAddRating.setTextColor(Color.GRAY)
+//            btnAddRating.isEnabled = false
+//        }
+//        parent.checkIfAdapterEmpty()
+//    }
 
     private fun onNameClick() {
         tvCourse?.let {

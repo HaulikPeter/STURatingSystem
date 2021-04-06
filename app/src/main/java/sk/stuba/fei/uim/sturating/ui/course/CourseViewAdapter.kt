@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item_course.view.*
 import sk.stuba.fei.uim.sturating.R
@@ -29,7 +30,15 @@ class CourseViewAdapter : RecyclerView.Adapter<CourseViewAdapter.ViewHolder>() {
 
         holder.course = course
         holder.tvSmallCourseName.text = (course.shortName + " " + course.longName)
-        holder.tvSmallCourseLecturer.text = course.courseLecturer
+        if (course.courseLecturer == "-1") {
+            holder.tvSmallCourseLecturer.visibility = View.INVISIBLE
+            holder.tvSmallCourseLecturerLabel.visibility = View.INVISIBLE
+        }
+        else {
+            holder.tvSmallCourseLecturer.visibility = View.VISIBLE
+            holder.tvSmallCourseLecturer.text = course.courseLecturer
+            holder.tvSmallCourseLecturerLabel.visibility = View.VISIBLE
+        }
         holder.tvSmallCourseAvgScr.text = ""
         for (i in 1..(floor(course.avgCourseScore).toInt())) {
             holder.tvSmallCourseAvgScr.append("⭐")
@@ -59,8 +68,10 @@ class CourseViewAdapter : RecyclerView.Adapter<CourseViewAdapter.ViewHolder>() {
     }
 
     fun addItem(course: Course) {
-        courseList.add(course)
-        notifyDataSetChanged()
+        if (!courseList.contains(course)) {
+            courseList.add(course)
+            notifyDataSetChanged()
+        }
     }
 
     fun addAllItem(mutableList: MutableList<Course>) {
@@ -88,6 +99,8 @@ class CourseViewAdapter : RecyclerView.Adapter<CourseViewAdapter.ViewHolder>() {
         val tvSmallCourseName: TextView = itemView.tvSmallCourseName
         val tvSmallCourseLecturer: TextView = itemView.tvSmallCourseLecturer
         val tvSmallCourseAvgScr: TextView = itemView.tvSmallCourseAvgScr
+
+        val tvSmallCourseLecturerLabel: TextView = itemView.tvSmallCourseLecturerLabel
 
         var course: Course? = null
 

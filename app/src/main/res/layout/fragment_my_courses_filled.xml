@@ -33,7 +33,7 @@
         android:text="@string/my_courses_empty_text_label"
         android:textColor="@color/white"
         android:textSize="28sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnMyCoursesEmpty"
+        app:layout_constraintBottom_toTopOf="@+id/btnSearchCourse"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,7 +41,7 @@
         app:layout_constraintVertical_chainStyle="packed" />
 
     <Button
-        android:id="@+id/btnMyCoursesEmpty"
+        android:id="@+id/btnSearchCourse"
         android:visibility="visible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -12,5 +12,6 @@ data class Course(
     var longDescription: String = "-1",
     var avgCourseScore: Double = -1.0,
     var avgLecturerScore: Double = -1.0,
-    var avgExaminerScore: Double = -1.0
+    var avgExaminerScore: Double = -1.0,
+    var teacherIds: ArrayList<Int> = arrayListOf()
 )
