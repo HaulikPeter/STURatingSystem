@@ -1,16 +1,21 @@
 package sk.stuba.fei.uim.sturating.ui.me
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.getValue
 import sk.stuba.fei.uim.sturating.R
+import sk.stuba.fei.uim.sturating.SplashActivity
 import kotlin.math.floor
 
 class MeFragment : Fragment() {
@@ -29,6 +34,8 @@ class MeFragment : Fragment() {
         readStars("avg_rat_cour", root.findViewById(R.id.tvUsrAvgRatCourse))
         readStars("avg_rat_exam",root.findViewById(R.id.tvUsrAvgRatExam))
         readStars("avg_rat_lect", root.findViewById(R.id.tvUsrAvgRatLec))
+
+        root.findViewById<Button>(R.id.btnLogout).setOnClickListener { logout() }
 
         return root
     }
@@ -74,5 +81,18 @@ class MeFragment : Fragment() {
             .child(auth.uid.toString()).child(type)
         ref.keepSynced(true)
         ref.addValueEventListener(listener)
+    }
+
+    private fun logout() {
+        FirebaseAuth.getInstance().signOut()
+        context?.let {
+            GoogleSignIn.getClient(
+                it,
+                GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()
+            ).signOut()
+        }
+        val intent = Intent(activity, SplashActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
 }

@@ -8,13 +8,14 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp" >
+
         <TextView
             android:id="@+id/tvCourse"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="B-MTSTA"
             android:textSize="32sp"
             android:textStyle="bold"
             android:textAlignment="center"
@@ -34,7 +35,6 @@
         <TextView
             android:id="@+id/tvLecturer"
             style="@style/CourseFragmentLecExDec"
-            android:text="doc. RNDr. Oľga Nánásiová, PhD."
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvLecturerLabel" />
 
@@ -49,7 +49,6 @@
         <TextView
             android:id="@+id/tvExaminer"
             style="@style/CourseFragmentLecExDec"
-            android:text="Mgr. Dávid Pancza, PhD."
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvExaminerLabel" />
 
@@ -84,7 +83,6 @@
         <TextView
             android:id="@+id/tvAvgCourseScore"
             style="@style/CourseFragmentAvgScores"
-            android:text="⭐⭐⭐"
             android:textSize="25sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -102,7 +100,6 @@
         <TextView
             android:id="@+id/tvAvgLecturerScore"
             style="@style/CourseFragmentAvgScores"
-            android:text="⭐⭐⭐⭐"
             android:textSize="25sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -120,7 +117,6 @@
         <TextView
             android:id="@+id/tvAvgExaminerScore"
             style="@style/CourseFragmentAvgScores"
-            android:text="⭐⭐⭐⭐⭐"
             android:textSize="25sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -20,9 +20,9 @@
         android:id="@+id/navTopList"
         android:icon="@drawable/ic_format_list_bulleted_24"
         android:title="@string/title_top_list" />
-
+<!--
     <item
         android:id="@+id/navSettings"
         android:icon="@drawable/ic_settings_24"
-        android:title="@string/title_settings" />
+        android:title="@string/title_settings" /> -->
 </menu>

@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.list_item_search_course_teachers.view.*
 import sk.stuba.fei.uim.sturating.R
 import sk.stuba.fei.uim.sturating.ui.course.Teacher
 import kotlin.math.floor
@@ -29,9 +28,24 @@ class SearchCourseDialogTeachersViewAdapter
         holder.teacher = teacher
         holder.tvListItemSearchTeacherName.text = teacher.name
         holder.tvListItemSearchTeacherRating.text = ""
-        val avgScr = (teacher.avgExaminerScore + teacher.avgLecturerScore) / 2
-        for (i in 1..floor(avgScr).toInt())
-            holder.tvListItemSearchTeacherRating.append("⭐")
+
+        if (teacher.avgExaminerScore == 0.0 && teacher.avgLecturerScore == 0.0) {
+            "No data to be shown".also { holder.tvListItemSearchTeacherRating.text = it }
+        }
+        else if (teacher.avgExaminerScore == 0.0) {
+            for (i in 1..floor(teacher.avgLecturerScore).toInt())
+                holder.tvListItemSearchTeacherRating.append("⭐")
+        }
+        else if (teacher.avgLecturerScore == 0.0) {
+            for (i in 1..floor(teacher.avgExaminerScore).toInt())
+                holder.tvListItemSearchTeacherRating.append("⭐")
+        }
+        else {
+            val avgScr = (teacher.avgExaminerScore + teacher.avgLecturerScore) /
+                    (teacher.examinerRatingCount + teacher.lecturerRatingCount)
+            for (i in 1..floor(avgScr).toInt())
+                holder.tvListItemSearchTeacherRating.append("⭐")
+        }
     }
 
     fun addItem(teacher: Teacher) {
@@ -39,13 +53,16 @@ class SearchCourseDialogTeachersViewAdapter
         notifyDataSetChanged()
     }
 
-    fun clear() = teacherList.clear()
+    fun clear() {
+        teacherList.clear()
+        notifyDataSetChanged()
+    }
 
     override fun getItemCount() = teacherList.size
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvListItemSearchTeacherName: TextView = itemView.tvListItemSearchTeacherName
-        val tvListItemSearchTeacherRating: TextView = itemView.tvListItemSearchTeacherRating
+        val tvListItemSearchTeacherName: TextView = itemView.findViewById(R.id.tvListItemSearchTeacherName)
+        val tvListItemSearchTeacherRating: TextView = itemView.findViewById(R.id.tvListItemSearchTeacherRating)
 
         var teacher: Teacher? = null
     }

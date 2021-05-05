@@ -7,12 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.core.view.doOnDetach
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.fragment_my_courses_filled.*
-import kotlinx.android.synthetic.main.fragment_search.*
 import sk.stuba.fei.uim.sturating.R
 import sk.stuba.fei.uim.sturating.ui.course.Course
 import sk.stuba.fei.uim.sturating.ui.course.CourseViewAdapter
@@ -26,7 +23,7 @@ class SearchResultFragment(private val parent: SearchFragment,
     private lateinit var courseViewAdapter: CourseViewAdapter
     private lateinit var rvCourses: RecyclerView
 
-    private lateinit var tyMyCoursesEmpty: TextView
+    private lateinit var tvMyCoursesEmpty: TextView
     private lateinit var btnSearchCourse: Button
     
     private val db = FirebaseDatabase.getInstance().reference
@@ -46,15 +43,15 @@ class SearchResultFragment(private val parent: SearchFragment,
         readCourses()
         rvCourses.adapter = courseViewAdapter
 
-        tyMyCoursesEmpty = root.findViewById(R.id.tvMyCoursesEmpty)
-        btnSearchCourse = root.findViewById(R.id.btnSearchCourse)
+        tvMyCoursesEmpty = root.findViewById(R.id.tvMyCoursesEmpty)
+        btnSearchCourse = root.findViewById(R.id.btnMyCoursesGotoSearch)
 
         btnSearchCourse.apply {
             isEnabled = false
             visibility = View.INVISIBLE
         }
-        tvMyCoursesEmpty?.text = "No such course for that search"
-        tvMyCoursesEmpty?.visibility = View.VISIBLE
+        "No such course for that search".also { tvMyCoursesEmpty.text = it }
+        tvMyCoursesEmpty.visibility = View.VISIBLE
 
         return root
     }
@@ -117,12 +114,12 @@ class SearchResultFragment(private val parent: SearchFragment,
     }
 
     override fun onDetach() {
-        parent.etSearchText.apply {
+        parent.etSearchText?.apply {
             visibility = View.VISIBLE
             isEnabled = true
-            setText("")
+            text = ""
         }
-        parent.btnSearch.apply {
+        parent.btnSearch?.apply {
             visibility = TextView.VISIBLE
             isEnabled = true
         }
@@ -132,6 +129,6 @@ class SearchResultFragment(private val parent: SearchFragment,
     override fun onItemClick(course: Course) {
         val fm = parentFragmentManager
         val fragment = SearchCourseDialogFragment(course)
-        fragment.show(fm, "Search Course Fragment")
+        fragment.show(fm, "Course Detailed Dialog Fragment")
     }
 }

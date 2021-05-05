@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:background="@color/courseFragmentBackground">
+
+    <TextView
+        android:id="@+id/tvAddRatingLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/add_rating_fragment_label"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvAddRatingCourseNameLabel"
+        android:text="@string/add_rating_course_label"
+        style="@style/AddRatingLabels"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAddRatingLabel" />
+    <TextView
+        android:id="@+id/tvAddRatingCourseName"
+        style="@style/AddRatingCourseInfo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAddRatingCourseNameLabel" />
+    <RatingBar
+        android:id="@+id/rbCourse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAddRatingCourseName" />
+
+
+
+    <TextView
+        android:id="@+id/tvAddRatingCourseLecturerLabel"
+        android:text="@string/add_rating_lecturer_label"
+        style="@style/AddRatingLabels"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rbCourse" />
+    <TextView
+        android:id="@+id/tvAddRatingCourseLecturer"
+        style="@style/AddRatingCourseInfo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAddRatingCourseLecturerLabel" />
+    <RatingBar
+        android:id="@+id/rbLecturer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAddRatingCourseLecturer" />
+
+
+    <TextView
+        android:id="@+id/tvAddRatingCourseExaminerLabel"
+        android:text="@string/add_rating_examiner_label"
+       style="@style/AddRatingLabels"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rbLecturer" />
+    <TextView
+        android:id="@+id/tvAddRatingCourseExaminer"
+        style="@style/AddRatingCourseInfo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAddRatingCourseExaminerLabel" />
+    <RatingBar
+        android:id="@+id/rbExaminer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAddRatingCourseExaminer" />
+
+    <Button
+        android:id="@+id/btnSubmitRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fragment_rate_course_submit_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rbExaminer" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

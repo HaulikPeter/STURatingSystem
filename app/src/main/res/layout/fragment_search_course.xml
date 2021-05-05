@@ -9,14 +9,14 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp" >
 
         <TextView
             android:id="@+id/tvSearchCourseName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="B-MTSTA"
             android:textSize="32sp"
             android:textStyle="bold"
             android:textAlignment="center"
@@ -56,7 +56,6 @@
         <TextView
             android:id="@+id/tvSearchAvgCourseScore"
             style="@style/CourseFragmentAvgScores"
-            android:text="⭐⭐⭐"
             android:textSize="25sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -77,7 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Average Teachers Ratings"
+            android:text="@string/average_teachers_ratings_label"
             android:textAlignment="center"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="24sp"

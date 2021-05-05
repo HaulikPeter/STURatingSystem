@@ -6,16 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import kotlinx.android.synthetic.main.activity_main.*
 import sk.stuba.fei.uim.sturating.R
 
-class SearchFragment : Fragment() {
+open class SearchFragment : Fragment() {
 
-    private lateinit var etSearchText: TextView
-    private lateinit var btnSearch: Button
+    var etSearchText: TextView? = null
+    var btnSearch: Button? = null
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -26,19 +23,17 @@ class SearchFragment : Fragment() {
         etSearchText = root.findViewById(R.id.etSearchText)
         btnSearch = root.findViewById(R.id.btnSearch)
 
-        btnSearch.setOnClickListener {
-            if (etSearchText.text.isNotBlank()) {
-                searchCourses(etSearchText.text.toString())
-                etSearchText.apply {
+        btnSearch?.setOnClickListener {
+            if (etSearchText?.text?.isNotBlank() == true) {
+                searchCourses(etSearchText?.text.toString())
+                etSearchText?.apply {
                     visibility = View.INVISIBLE
                     isEnabled = false
                 }
-                btnSearch.apply {
+                btnSearch?.apply {
                     visibility = View.INVISIBLE
                     isEnabled = false
                 }
-            } else {
-                // TODO: valami figyelmezteto hogy ures a field
             }
         }
 

@@ -11,7 +11,7 @@
         android:id="@+id/tvSmallCourseNameLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Course name:"
+        android:text="@string/li_course_name"
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -21,7 +21,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="110dp"
-        android:text="B-BP1 Bachelor Project 1"
         android:textColor="@color/colorPrimaryDark"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Course lecturer:"
+        android:text="@string/li_course_lecturer"
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvSmallCourseName" />
@@ -43,7 +42,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginStart="110dp"
-        android:text="Ing. Peter Špaček"
         android:textColor="@color/colorPrimaryDark"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,7 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Average score:"
+        android:text="@string/li_average_score"
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvSmallCourseLecturer" />
@@ -65,12 +63,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="110dp"
         android:layout_marginTop="10dp"
-        android:text="⭐⭐⭐⭐⭐"
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvSmallCourseLecturer" />
 
     <TextView
+        android:id="@+id/tvBlueViewOpener"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"

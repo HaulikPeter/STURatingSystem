@@ -32,9 +32,26 @@
     <string name="average_rating_for_examiners_label">Average rating for examiners:</string>
     <string name="my_courses_empty_text_label">It seems you haven\'t added any courses yet.</string>
     <string name="my_courses_empty_btn_label">Find Courses</string>
-    <string-array name="spinner_array">
+    <string name="add_rating_course_label"><u>Please rate the course as a whole:</u></string>
+    <string name="add_rating_lecturer_label"><u>Its lecturer:</u></string>
+    <string name="add_rating_examiner_label"><u>And finally, its examiner:</u></string>
+    <string name="add_rating_fragment_label">Rate this course</string>
+    <string name="fragment_rate_course_submit_btn">submit rating</string>
+    <string name="btn_logout">Log me out</string>
+    <string name="average_teachers_ratings_label">Average Teachers Ratings</string>
+    <string name="fragment_search_search_label">Search From Course List</string>
+    <string name="fragment_search_hint_label">Format B-PROG1</string>
+    <string name="fragment_search_btn_label">SEARCH</string>
+    <string name="fragment_top_list_label">Top 10</string>
+    <string name="li_course_name">Course name:</string>
+    <string name="li_course_lecturer">Course lecturer:</string>
+    <string name="li_average_score">Average score:</string>
+    <string name="fragment_search_teacher_lect_label">Select your lecturer</string>
+    <string name="fragment_search_teacher_exam_label">Select your examiner</string>
+    <string name="fragment_search_btn_add_label">Add to my courses</string>
+    <string-array name="top_list_spinner_array">
         <item>Courses</item>
         <item>Lecturers</item>
-        <item>Examiner</item>
+        <item>Examiners</item>
     </string-array>
 </resources>

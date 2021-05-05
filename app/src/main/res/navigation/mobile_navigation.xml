@@ -15,7 +15,7 @@
         android:id="@+id/navMyCourses"
         android:name="sk.stuba.fei.uim.sturating.ui.mycourses.MyCoursesFragment"
         android:label="@string/title_my_courses"
-        tools:layout="@layout/fragment_my_courses_empty" />
+        tools:layout="@layout/fragment_my_courses_filled" />
 
     <fragment
         android:id="@+id/navigation_search"
@@ -28,11 +28,11 @@
         android:name="sk.stuba.fei.uim.sturating.ui.toplist.TopListFragment"
         android:label="@string/title_top_list"
         tools:layout="@layout/fragment_top_list" />
-
+    <!--
     <fragment
         android:id="@+id/navSettings"
-        android:name="sk.stuba.fei.uim.sturating.ui.settings.SettingsFragment"
+        android:name="sk.stuba.fei.uim.sturating.ui.settings.SettingsFragmen t"
         android:label="@string/title_settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings" /> -->
 
 </navigation>

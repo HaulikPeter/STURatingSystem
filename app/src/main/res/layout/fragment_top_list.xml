@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,44 +7,47 @@
     tools:context=".ui.me.MeFragment"
     android:background="@color/colorPrimary">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Top 10"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="32sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/fragment_top_list_label"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <Spinner
-            android:id="@+id/spinnerTopList"
-            android:layout_width="150dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="20dp"
-            android:background="@color/navBackground"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+    <Spinner
+        android:id="@+id/spinnerTopList"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:textAlignment="center"
+        android:background="@color/navBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerTopList">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvTopList"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/list_item_course"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinnerTopList" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            app:layoutManager="LinearLayoutManager"
+            tools:listitem="@layout/list_item_course" />
+    </ScrollView>
 
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

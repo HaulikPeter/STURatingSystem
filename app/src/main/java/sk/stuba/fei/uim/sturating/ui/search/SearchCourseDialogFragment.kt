@@ -16,7 +16,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import kotlinx.android.synthetic.main.fragment_search_course.*
 import sk.stuba.fei.uim.sturating.R
 import sk.stuba.fei.uim.sturating.ui.course.Course
 
@@ -101,8 +100,25 @@ class SearchCourseDialogFragment(
     }
 
     private val addListener = View.OnClickListener {
+        db.child("courses").child(course.shortName).child("teachers")
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val teacherIds = mutableListOf<Int>()
+                    snapshot.children.forEach {
+                        teacherIds.add(it.value.toString().toInt())
+                    }
 
+                    val fm = parentFragmentManager
+                    val fragment = SearchAddCourseTeachers(teacherIds, course)
+                    fragment.show(fm, "Search Add Course Teachers Fragment")
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.w(error.message, "add failed in search course fragment")
+                }
+            })
     }
+
     private val removeListener = View.OnClickListener {
         db.child("users").child(auth.uid.toString()).child("courses")
             .addListenerForSingleValueEvent(object : ValueEventListener {
@@ -145,13 +161,19 @@ class SearchCourseDialogFragment(
             db.child("teachers").child(id.toString())
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        scdAdapter.addItem(Teacher(
+                        val teacher = Teacher(
                             name = snapshot.child("name").value.toString(),
                             avgLecturerScore = snapshot.child("avg_lecturer_score").value
                                 .toString().toDouble(),
                             avgExaminerScore = snapshot.child("avg_examiner_score").value
-                                .toString().toDouble()
-                        ))
+                                .toString().toDouble(),
+                            examinerRatingCount = snapshot.child("examiner_rating_count").value
+                                .toString().toDouble().toInt(),
+                            lecturerRatingCount = snapshot.child("lecturer_rating_count").value
+                                .toString().toDouble().toInt()
+                        )
+
+                        scdAdapter.addItem(teacher)
                     }
 
                     override fun onCancelled(error: DatabaseError) {
