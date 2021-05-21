@@ -76,24 +76,22 @@ class SearchAddCourseTeachers(
     }
 
     private fun saveUserCourse(userCourse: UserCourse) {
-        val id = rand()
         db.child("users").child(auth.uid.toString())
-            .child("courses").child(id)
+            .child("courses")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-
-                    if (snapshot.value == null) {
-                        db.child("users").child(auth.uid.toString())
-                            .child("courses")
-                            .child(id)
-                            .setValue(userCourse)
-                        val parent = parentFragmentManager
-                            .findFragmentByTag("Course Detailed Dialog Fragment") as DialogFragment
-                        parent.dismiss()
-                        dismiss()
-                    } else {
-                        saveUserCourse(userCourse)
-                    }
+                    val list = snapshot.children.toList()
+                    var id = 0
+                    if (list.isNotEmpty())
+                        list.last().key?.let { id = it.toInt() + 1 }
+                    db.child("users").child(auth.uid.toString())
+                        .child("courses")
+                        .child(id.toString())
+                        .setValue(userCourse)
+                    val parent = parentFragmentManager
+                        .findFragmentByTag("Course Detailed Dialog Fragment") as DialogFragment
+                    parent.dismiss()
+                    dismiss()
                 }
 
                 override fun onCancelled(error: DatabaseError) {

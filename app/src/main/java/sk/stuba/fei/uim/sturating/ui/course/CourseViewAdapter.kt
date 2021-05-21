@@ -66,7 +66,9 @@ class CourseViewAdapter() : RecyclerView.Adapter<CourseViewAdapter.ViewHolder>()
                     holder.tvSmallCourseLecturer.append("⭐")
 
                 holder.tvSmallCourseAvgScr.text = ""
-                val avgTeacherScore = (course.avgLecturerScore + course.avgExaminerScore) / 2
+                var avgTeacherScore = course.avgLecturerScore
+                if (course.avgExaminerScore != 0.0)
+                    avgTeacherScore = (course.avgLecturerScore + course.avgExaminerScore) / 2
                 for (i in 1..(floor(avgTeacherScore).toInt()))
                     holder.tvSmallCourseAvgScr.append("⭐")
 
@@ -83,7 +85,9 @@ class CourseViewAdapter() : RecyclerView.Adapter<CourseViewAdapter.ViewHolder>()
                     holder.tvSmallCourseLecturer.append("⭐")
 
                 holder.tvSmallCourseAvgScr.text = ""
-                val avgTeacherScore = (course.avgLecturerScore + course.avgExaminerScore) / 2
+                var avgTeacherScore = course.avgExaminerScore
+                if (course.avgLecturerScore != 0.0)
+                    avgTeacherScore = (course.avgLecturerScore + course.avgExaminerScore) / 2
                 for (i in 1..(floor(avgTeacherScore).toInt()))
                     holder.tvSmallCourseAvgScr.append("⭐")
 
