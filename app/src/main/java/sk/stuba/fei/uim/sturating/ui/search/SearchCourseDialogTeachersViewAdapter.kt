@@ -41,8 +41,7 @@ class SearchCourseDialogTeachersViewAdapter
                 holder.tvListItemSearchTeacherRating.append("⭐")
         }
         else {
-            val avgScr = (teacher.avgExaminerScore + teacher.avgLecturerScore) /
-                    (teacher.examinerRatingCount + teacher.lecturerRatingCount)
+            val avgScr = (teacher.avgExaminerScore + teacher.avgLecturerScore) / 2
             for (i in 1..floor(avgScr).toInt())
                 holder.tvListItemSearchTeacherRating.append("⭐")
         }

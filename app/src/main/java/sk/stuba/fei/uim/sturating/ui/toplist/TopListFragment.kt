@@ -75,7 +75,7 @@ class TopListFragment : Fragment(), AdapterView.OnItemSelectedListener {
         view?.findViewById<RecyclerView>(R.id.rvTopList)?.adapter = adapter
         db.child("courses")
             .orderByChild("avg_course_score").limitToLast(10)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
+            .addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val list = snapshot.children.toMutableList()
                 for (i in list.size-1 downTo 0) {
@@ -106,7 +106,7 @@ class TopListFragment : Fragment(), AdapterView.OnItemSelectedListener {
         db.child("teachers")
             .orderByChild("avg_lecturer_score")
             .limitToLast(10)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
+            .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val list = snapshot.children.toList()
                     for (i in list.size-1 downTo 0) {
@@ -131,7 +131,7 @@ class TopListFragment : Fragment(), AdapterView.OnItemSelectedListener {
         db.child("teachers")
             .orderByChild("avg_examiner_score")
             .limitToLast(10)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
+            .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val list = snapshot.children.toList()
                     for (i in list.size-1 downTo 0)

@@ -59,10 +59,10 @@ class SearchResultFragment(private val parent: SearchFragment,
     private fun readCourses() {
         val query = db.child("courses")
             .orderByKey()
-            .startAt(searchText.toUpperCase(Locale.ROOT))
-            .endAt(searchText.toUpperCase(Locale.ROOT) + "\\uf8ff")
+            .startAt(searchText.uppercase(Locale.ROOT))
+            .endAt(searchText.uppercase(Locale.ROOT) + "\\uf8ff")
 
-        query.addValueEventListener(object : ValueEventListener {
+        query.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 courseNames.clear()
                 snapshot.children.forEach {
