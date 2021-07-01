@@ -19,6 +19,7 @@ import sk.stuba.fei.uim.sturating.ui.course.Course
 import sk.stuba.fei.uim.sturating.ui.course.CourseViewAdapter
 import sk.stuba.fei.uim.sturating.ui.search.SearchCourseDialogFragment
 
+// class for the toplist fragment
 class TopListFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private val db = FirebaseDatabase.getInstance().reference
@@ -33,6 +34,7 @@ class TopListFragment : Fragment(), AdapterView.OnItemSelectedListener {
     ): View? {
         val root = inflater.inflate(R.layout.fragment_top_list, container, false)
 
+        // spinner is used to select which of the three should be listed out
         val spinner: Spinner = root.findViewById(R.id.spinnerTopList)
         spinner.onItemSelectedListener = this
         ArrayAdapter.createFromResource(
@@ -52,6 +54,7 @@ class TopListFragment : Fragment(), AdapterView.OnItemSelectedListener {
         return root
     }
 
+    // depending on the selection the following function will be initiated
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         val list = resources.getStringArray(R.array.top_list_spinner_array)
         when(parent?.getItemAtPosition(position)) {
@@ -65,6 +68,7 @@ class TopListFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private fun onSelectCourses() {
         adapter = CourseViewAdapter()
+        // on course selection the user can open the course itself which is done here
         adapter.itemClickLister = object : CourseViewAdapter.CourseItemClickListener {
             override fun onItemClick(course: Course) {
                 val fm = parentFragmentManager
@@ -72,6 +76,7 @@ class TopListFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 fragment.show(fm, "Course Detailed Dialog Fragment")
             }
         }
+        // then the courses are fetched from the database, ordered and listed
         view?.findViewById<RecyclerView>(R.id.rvTopList)?.adapter = adapter
         db.child("courses")
             .orderByChild("avg_course_score").limitToLast(10)
@@ -100,6 +105,7 @@ class TopListFragment : Fragment(), AdapterView.OnItemSelectedListener {
         })
     }
 
+    // same applies to the lecturers as well as for the course
     private fun onSelectLecturers() {
         adapter = CourseViewAdapter(CourseViewAdapter.TYPE_TOP_LECTURERS)
         view?.findViewById<RecyclerView>(R.id.rvTopList)?.adapter = adapter
@@ -125,6 +131,7 @@ class TopListFragment : Fragment(), AdapterView.OnItemSelectedListener {
             })
     }
 
+    // same applies to the examiner as well as for the course
     private fun onSelectExaminers() {
         adapter = CourseViewAdapter(CourseViewAdapter.TYPE_TOP_EXAMINERS)
         view?.findViewById<RecyclerView>(R.id.rvTopList)?.adapter = adapter

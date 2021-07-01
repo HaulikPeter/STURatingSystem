@@ -10,6 +10,7 @@ import sk.stuba.fei.uim.sturating.R
 import java.lang.IndexOutOfBoundsException
 import kotlin.math.floor
 
+// adapter for the courses recyclerview
 class CourseViewAdapter() : RecyclerView.Adapter<CourseViewAdapter.ViewHolder>() {
 
     companion object {
@@ -20,6 +21,7 @@ class CourseViewAdapter() : RecyclerView.Adapter<CourseViewAdapter.ViewHolder>()
 
     private var type = TYPE_NORMAL
 
+    // it has types for the top list to reduce code redundancy
     constructor(type: Int) : this() {
         if (type == TYPE_TOP_LECTURERS || type == TYPE_TOP_EXAMINERS)
             this.type = type
@@ -35,6 +37,7 @@ class CourseViewAdapter() : RecyclerView.Adapter<CourseViewAdapter.ViewHolder>()
         return ViewHolder(view)
     }
 
+    // sets the the view of the type depending on the type set
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val course = courseList[position]
         holder.course = course
@@ -96,10 +99,13 @@ class CourseViewAdapter() : RecyclerView.Adapter<CourseViewAdapter.ViewHolder>()
         }
     }
 
+    // returns the intem count in the list
     override fun getItemCount() = courseList.size
 
+    // checks the list if its empty
     fun isEmpty() = courseList.isEmpty()
 
+    // checks for an instance of a item with its id
     fun hasItem(id: Int): Boolean {
         return try {
             courseList[id]
@@ -110,6 +116,7 @@ class CourseViewAdapter() : RecyclerView.Adapter<CourseViewAdapter.ViewHolder>()
         }
     }
 
+    // checks for an instance of a item with its name
     fun hasItem(courseName: String): Boolean {
         courseList.forEach{
             if (it.shortName === courseName)
@@ -118,6 +125,7 @@ class CourseViewAdapter() : RecyclerView.Adapter<CourseViewAdapter.ViewHolder>()
         return false
     }
 
+    // adds an item to the list
     fun addItem(course: Course) {
         if (!courseList.contains(course)) {
             courseList.add(course)
@@ -125,12 +133,14 @@ class CourseViewAdapter() : RecyclerView.Adapter<CourseViewAdapter.ViewHolder>()
         }
     }
 
+    // replaces the items in the list
     fun addAllItem(mutableList: MutableList<Course>) {
         courseList.clear()
         courseList = mutableList
         notifyDataSetChanged()
     }
 
+    // replaces a specific item in the list
     fun replaceItem(course: Course) {
         if (courseList.remove(course)) {
             courseList.add(course)
@@ -138,21 +148,25 @@ class CourseViewAdapter() : RecyclerView.Adapter<CourseViewAdapter.ViewHolder>()
         }
     }
 
+    // removes an item from the list
     fun removeItem(course: Course) {
         courseList.remove(course)
         notifyDataSetChanged()
     }
 
+    // removes an item by its id from the list
     fun removeItem(id: Int) {
         courseList.removeAt(id)
         notifyDataSetChanged()
     }
 
+    // clears the list
     fun removeAll() {
         courseList = mutableListOf()
         notifyDataSetChanged()
     }
 
+    // viewholder class for the view holder
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvSmallCourseNameLabel: TextView = itemView.findViewById(R.id.tvSmallCourseNameLabel)
         val tvSmallCourseName: TextView = itemView.findViewById(R.id.tvSmallCourseName)

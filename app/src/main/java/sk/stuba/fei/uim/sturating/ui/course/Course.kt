@@ -1,5 +1,6 @@
 package sk.stuba.fei.uim.sturating.ui.course
 
+// data class which represents a course in the db
 data class Course(
     val id: Int,
     var shortName: String = "-1",

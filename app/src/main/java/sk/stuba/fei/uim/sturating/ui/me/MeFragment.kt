@@ -18,8 +18,10 @@ import sk.stuba.fei.uim.sturating.R
 import sk.stuba.fei.uim.sturating.SplashActivity
 import kotlin.math.floor
 
+// fragment of the Me section
 class MeFragment : Fragment() {
 
+    //creates the view and reads the user data from the database
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
@@ -40,6 +42,7 @@ class MeFragment : Fragment() {
         return root
     }
 
+    // generalized read function
     private fun read(type: String, tv: TextView) {
         val listener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -58,6 +61,8 @@ class MeFragment : Fragment() {
         ref.addValueEventListener(listener)
     }
 
+
+    // reads the rating values and displays them in a star form
     private fun readStars(type: String, tv: TextView) {
         val listener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -83,6 +88,7 @@ class MeFragment : Fragment() {
         ref.addValueEventListener(listener)
     }
 
+    // logout function which starts the google signOut() function and closes the main intent
     private fun logout() {
         FirebaseAuth.getInstance().signOut()
         context?.let {

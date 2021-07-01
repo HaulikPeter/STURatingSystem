@@ -20,6 +20,7 @@ import sk.stuba.fei.uim.sturating.R
 import sk.stuba.fei.uim.sturating.ui.mycourses.AddRatingDialogFragment
 import kotlin.math.floor
 
+// course fragment that displays a single course
 class CourseFragment(
     private val course: Course,
     private val adapter: CourseViewAdapter
@@ -34,6 +35,7 @@ class CourseFragment(
     private val auth = FirebaseAuth.getInstance()
     private val db = FirebaseDatabase.getInstance().reference
 
+    // it sets up the view with the data provided from the constructor
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -101,12 +103,14 @@ class CourseFragment(
         return root
     }
 
+    // when user adds the rating the teachers selector opens
     private fun onAddRatingClicked() {
         val fm = parentFragmentManager
         val fragment = AddRatingDialogFragment(course)
         fragment.show(fm, "Add Rating Dialog Fragment")
     }
 
+    // add listener for the button in case the user does not have it
     private val addListener = View.OnClickListener {
         val ref = db.child("users").child(auth.uid.toString())
             .child("courses").child(course.id.toString())
@@ -118,6 +122,7 @@ class CourseFragment(
         checkButtons()
     }
 
+    // remove listener for the button in case the user has it
     private val removeListener = View.OnClickListener {
         db.child("users").child(auth.uid.toString()).child("courses")
             .addListenerForSingleValueEvent(object : ValueEventListener {
@@ -140,6 +145,7 @@ class CourseFragment(
             })
     }
 
+    // checking the buttons whether the has it
     private fun checkButtons() {
             if (btnAddRemoveCourse?.tag as Boolean) {
                 btnAddRemoveCourse?.apply {
@@ -164,6 +170,7 @@ class CourseFragment(
             }
     }
 
+    // when clicked on the name of the course it switches from course code to full name and vice versa
     private fun onNameClick() {
         tvCourse?.let {
             if (it.tag == "short") {
@@ -176,6 +183,7 @@ class CourseFragment(
         }
     }
 
+    // clicking on the description will expand or shrinks the description
     private fun onDescClick() {
         val shortDesc = course.shortDescription +
                 "<br /><font color='blue'>More Info</font>"

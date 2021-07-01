@@ -12,6 +12,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 
+// login activitiy if the user is not yet authenticated
 class LoginActivity : AppCompatActivity() {
 
     companion object {
@@ -21,6 +22,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
 
+    // here the sign in service is asked from the device
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -37,6 +39,7 @@ class LoginActivity : AppCompatActivity() {
         btnLogin.setOnClickListener { signIn() }
     }
 
+    // button listener function when the user initiates the sign in
     private fun signIn() {
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
@@ -65,6 +68,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    // googles authenticator is used to log in the user
     private fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         mAuth.signInWithCredential(credential)

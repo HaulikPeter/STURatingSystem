@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.functions.FirebaseFunctions
 import sk.stuba.fei.uim.sturating.R
 
+// class for the rating submission dialog fragment
 class AddRatingDialogFragment(
     private val course: Course
 ) : DialogFragment() {
@@ -48,6 +49,7 @@ class AddRatingDialogFragment(
         return root
     }
 
+    // when clicked the submit button it checks whether the user rated for all fields
     private fun onSubmitClick() {
         btnSubmitRating.isEnabled = false
         if (rbCourse.rating == 0.0f && rbLecturer.rating == 0.0f && rbExaminer.rating == 0.0f)
@@ -59,6 +61,7 @@ class AddRatingDialogFragment(
             submitRating()
     }
 
+    // shows an alert dialog with a set message and positive button
     private fun showDialog(message: String, enablePositiveButton: Boolean) {
         val dialogBuilder = AlertDialog.Builder(context)
         dialogBuilder.setTitle("Notice")
@@ -82,6 +85,7 @@ class AddRatingDialogFragment(
         dialogBuilder.create().show()
     }
 
+    // initiates the http cloud function request
     private fun submitRating() {
         addRating().addOnCompleteListener { task ->
             if (!task.isSuccessful) {
